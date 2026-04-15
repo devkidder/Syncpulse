@@ -18,9 +18,6 @@ jobs:
     permissions:
       contents: write
       id-token: write
-      packages: write
-    env:
-      HAS_GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY != '' }}
 
     steps:
       - uses: actions/checkout@v5
@@ -33,52 +30,13 @@ jobs:
           node-version: 20.x
           registry-url: https://registry.npmjs.org
 
-      - name: Configure Git user for signed commits
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git config --global commit.gpgsign false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v6
-        if: env.HAS_GPG_PRIVATE_KEY == 'true'
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          git_committer_name: github-actions[bot]
-          git_committer_email: github-actions[bot]@users.noreply.github.com
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-          git_tag_gpgsign: true
-
-      - name: Prepare workspace publish versions
-        run: node scripts/prepare-publish-versions.cjs
-
-      - name: Auto-bump workspace versions for npm publish
-        run: node scripts/auto-bump-publish-versions.js
-
-      - name: Sync package-lock.json after version bumps
-        run: npm install --package-lock-only --ignore-scripts
-
       - name: Install dependencies
         run: npm ci
 
-      - name: Prepare package scope for publishing
+      - name: Verify package-lock is up to date
         run: |
-          if [ -z "${NPM_SCOPE}" ]; then
-            export NPM_SCOPE=$(npm whoami)
-          fi
-          echo "Publishing with scope: @${NPM_SCOPE#@}"
-          node scripts/prepare-publish-scope.js
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_SCOPE: ${{ vars.NPM_SCOPE }}
-
-      - name: Preflight publish version check
-        run: node scripts/preflight-publish-check.js
+          npm install --package-lock-only --ignore-scripts
+          git diff --exit-code package-lock.json
 
       - name: Lint
         run: npm run lint --if-present
@@ -89,60 +47,20 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Commit and sign version updates
-        if: success() && !startsWith(github.ref, 'refs/tags/') && env.HAS_GPG_PRIVATE_KEY == 'true'
-        run: |
-          if git diff --quiet; then
-            echo "No changes to commit"
-          else
-            git add -A
-            git commit -S -m $'chore: bump versions for publish\n\n- Updated workspace versions\n- Refreshed package-lock.json\n- Automated by: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' || true
-            git push origin HEAD:${{ github.ref_name }}
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create signed tag
-        if: success() && !startsWith(github.ref, 'refs/tags/') && env.HAS_GPG_PRIVATE_KEY == 'true'
-        run: |
-          VERSION=$(node -e "console.log(require('./package.json').version)")
-          TAG="v${VERSION}"
-          if ! git rev-parse "${TAG}" >/dev/null 2>&1; then
-            git tag -s "${TAG}" -m $'Release version '"${VERSION}"$'\n\nAutomated publish workflow from branch: ${{ github.ref_name }}\nBuild: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            git push origin "${TAG}"
-            echo "Created and pushed signed tag: ${TAG}"
-          else
-            echo "Tag ${TAG} already exists"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish workspaces to npm
         run: npm publish --workspaces --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create GitHub release
-        if: success() && startsWith(github.ref, 'refs/tags/')
+      - name: Create GitHub Release
         uses: actions/create-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Published to npm with tag: ${{ github.ref }}
           draft: false
           prerelease: false
-          body: |
-            ## Published Packages
-
-            Published to npm registry with GPG signed commit and tag.
-
-            **Workflow Run:** [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-
-      - name: Publish complete notification
-        if: success()
-        run: |
-          echo "✅ Publish workflow completed successfully"
-          echo "📦 Packages published to npm registry"
-          echo "🔐 Commits and tags signed with GPG"
-          echo "🏷️ Release: ${{ github.ref_name }}"
