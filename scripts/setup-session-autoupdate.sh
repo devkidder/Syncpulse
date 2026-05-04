@@ -27,7 +27,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
   exit 0
 fi
 
-ENABLED=$(cat "$CONFIG_FILE" 2>/dev/null | grep -o '"enabled":"true"' || echo "")
+ENABLED=$(cat "$CONFIG_FILE" 2>/dev/null | grep -o '"enabled"[[:space:]]*:[[:space:]]*true' || echo "")
 if [ -z "$ENABLED" ]; then
   exit 0
 fi

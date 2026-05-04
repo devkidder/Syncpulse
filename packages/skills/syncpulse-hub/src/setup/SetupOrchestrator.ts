@@ -130,13 +130,25 @@ export class SetupOrchestrator {
   }
 
   private async executeNpm(args: string[]): Promise<void> {
-    // This would execute: npm [args]
-    console.log(`  $ npm ${args.join(' ')}`);
+    try {
+      const { execSync } = await import('child_process');
+      console.log(`  $ npm ${args.join(' ')}`);
+      execSync(`npm ${args.join(' ')}`, { stdio: 'inherit' });
+    } catch (error) {
+      console.error(`Failed to execute npm command: ${error}`);
+      throw error;
+    }
   }
 
   private async executeBash(command: string): Promise<void> {
-    // This would execute: bash -c command
-    console.log(`  $ ${command}`);
+    try {
+      const { execSync } = await import('child_process');
+      console.log(`  $ ${command}`);
+      execSync(command, { stdio: 'inherit', shell: true });
+    } catch (error) {
+      console.error(`Failed to execute bash command: ${error}`);
+      throw error;
+    }
   }
 
   private reportResults(results: Map<string, any>): void {
