@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-inquirer",
-  "version": "8.0.0",
+  "version": "1.0.5",
   "description": "Interactive CLI prompts integration for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/skill-linkedin-master-journalist",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Draft polished LinkedIn release and thought-leadership posts.",
   "type": "module",
   "main": "./dist/index.js",

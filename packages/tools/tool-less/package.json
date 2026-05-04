@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-less",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "LESS CSS preprocessor tool wrapper for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

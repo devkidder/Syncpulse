@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-jest",
-  "version": "29.0.0",
+  "version": "1.0.5",
   "description": "JavaScript testing framework integration for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

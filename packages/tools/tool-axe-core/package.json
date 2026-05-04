@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-axe-core",
-  "version": "4.0.0",
+  "version": "1.0.5",
   "description": "Accessibility testing engine integration for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

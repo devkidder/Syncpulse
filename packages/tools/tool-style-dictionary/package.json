@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-style-dictionary",
-  "version": "3.0.0",
+  "version": "1.0.5",
   "description": "Design token management and multi-format export integration for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-tsup",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "TypeScript bundler tool wrapper for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

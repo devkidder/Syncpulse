@@ -1,6 +1,6 @@
 {
   "name": "@h4shed/tool-typedoc",
-  "version": "0.24.0",
+  "version": "1.0.5",
   "description": "TypeScript API documentation generator integration for @h4shed ecosystem",
   "type": "module",
   "main": "./dist/index.js",

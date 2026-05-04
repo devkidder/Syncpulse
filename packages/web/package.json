@@ -1,6 +1,6 @@
 {
   "name": "@fused-gaming/swarm-controller",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Artistic interactive dashboard for SyncPulse agent swarm control and monitoring",
   "private": true,
   "scripts": {
