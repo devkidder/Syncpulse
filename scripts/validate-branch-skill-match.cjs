@@ -25,7 +25,9 @@ function extractSkillFromBranch(branchName) {
     /feat\/([a-z0-9-]+)/,
     /feature\/([a-z0-9-]+)/,
     /skill\/([a-z0-9-]+)/,
-    /claude\/implement-([a-z0-9-]+)/,
+    /claude\/implement-([a-z0-9-]+?)(?:-[0-9A-Za-z]+)?$/,  // Handles version suffixes like -6WZpc
+    /fix\/([a-z0-9-]+)/,
+    /chore\/([a-z0-9-]+)/,
   ];
 
   for (const pattern of patterns) {
@@ -47,9 +49,14 @@ function getChangedFiles() {
   }
 }
 
-// Find skill package from file path
+// Find skill package from file path (only source, not dist)
 function findSkillInPath(filePath) {
-  const skillMatch = filePath.match(/packages\/skills\/([a-z0-9-]+)\//);
+  // Ignore dist/build artifacts
+  if (filePath.includes('/dist/') || filePath.endsWith('.js.map') || filePath.endsWith('.d.ts')) {
+    return null;
+  }
+
+  const skillMatch = filePath.match(/packages\/skills\/([a-z0-9-]+)\/src/);
   return skillMatch ? skillMatch[1] : null;
 }
 
