@@ -159,6 +159,8 @@ orchestration-state.json
 # IDE & Editor Configuration (keep .claude/.claude-flow but ignore cache)
 .claude/cache
 .claude/logs
+.claude-flow/cache
+.claude-flow/logs
 
 # Temporary Files
 *.tmp
