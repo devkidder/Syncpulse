@@ -37,6 +37,7 @@
 | **skill-creator** | Custom skill builder | ✅ |
 | **underworld-writer** | Character/world narrative generation | ✅ |
 | **agentic-flow-devkit** | Agentic orchestration GUI + trailer A/B-roll planning | 🆕 |
+| **linkedin-master-journalist** | LinkedIn article + dual posts + branded covers | ✅ |
 | **tailwindcss-style-builder** | Utility-first styling and design system builder | 📋 |
 | **storybook-component-library** | Component documentation and visual testing | 📋 |
 | **playwright-test-automation** | End-to-end testing automation framework | 📋 |
@@ -65,6 +66,7 @@ All with professional HTML templates, security best practices, and full agent in
 - `skill-algorithmic-art`, `skill-ascii-mockup`, `skill-canvas-design`
 - `skill-frontend-design`, `skill-mcp-builder`, `skill-pre-deploy-validator`
 - `skill-skill-creator`, `skill-theme-factory`, `skill-underworld-writer`
+- `skill-linkedin-master-journalist`
 - `skill-syncpulse` ⭐ (v0.2.0 — 9 email workflow templates)
 
 **Scaffolded and queued for publish (`@h4shed`)**
@@ -101,6 +103,60 @@ Transform your Claude workflow with meticulously crafted tools designed for:
 **Trusted by:** Fused Gaming • VLN Security • Design Studios • AI Development Teams
 
 ---
+
+## 💼 LinkedIn Master Journalist (LIMJ) Skill
+
+**Transform briefs into publication-ready LinkedIn content with autonomous article generation, social posts, and branded cover images.**
+
+### What LIMJ Does
+
+- **Article.md**: 1,200–1,800 word articles optimized for C-suite engagement
+- **Posts.md**: Dual social variants (personal + company) with hashtag research and engagement strategy
+- **Cover.html**: Self-contained 1200×627px LinkedIn OpenGraph covers with PNG export
+
+### Quick Trigger
+
+```bash
+# Copy the system prompt
+cat LIMJ/LIMJ_System_Prompt.md
+
+# Paste into Claude with your content brief:
+# Topic: [your topic]
+# Angle: [contrarian/educational/case-study]
+# Audience: [founder/CEO/CTO]
+
+# Get: Article.md + Posts.md + Cover.html (publication-ready)
+```
+
+### Learn More
+
+- **Full Documentation**: [LIMJ/README.md](./LIMJ/README.md)
+- **Quick Start Guide**: [LIMJ/quickstart.md](./LIMJ/quickstart.md)
+- **System Prompt**: [LIMJ/LIMJ_System_Prompt.md](./LIMJ/LIMJ_System_Prompt.md)
+- **Guidelines**: [LIMJ/guidelines/](./LIMJ/guidelines/) (vocabulary, colors, typography, hashtags)
+- **Templates**: [LIMJ/templates/](./LIMJ/templates/) (examples + blanks)
+
+---
+
+## 🎬 Quick Start (2 Minutes)
+
+### Option 1: Interactive Installation (Recommended)
+
+```bash
+# Clone and navigate to the repo
+git clone https://github.com/fused-gaming/fused-gaming-skill-mcp.git
+cd fused-gaming-skill-mcp
+
+# Run the interactive installer
+npm run mcp:install
+```
+
+This will guide you through:
+- ✅ Selecting installation mode (full, minimal, or custom)
+- ✅ Choosing your environment (development or production)
+- ✅ Generating the skill registry
+- ✅ Installing dependencies
+- ✅ Building all packages
 
 ## 🎬 Quick Start
 
@@ -480,6 +536,9 @@ All releases are **GPG signed** for security and authenticity:
 - ✅ **Signed Tags** — Release tags are verified with GPG
 - ✅ **GitHub Badge** — "Verified" badge on all commits and releases
 - ✅ **npm Authenticity** — Packages published with signing credentials
+
+### Publishing Workflow
+
 
 ### Publishing Workflow
 

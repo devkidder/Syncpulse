@@ -1,5 +1,7 @@
 {
   "name": "@h4shed/skill-linkedin-master-journalist",
+  "version": "1.0.1",
+  "description": "Draft polished LinkedIn release and thought-leadership posts with quality validation and performance tracking.",
   "version": "1.0.2",
   "description": "Draft polished LinkedIn release and thought-leadership posts.",
   "type": "module",
@@ -13,6 +15,7 @@
     "test": "echo \"No tests yet\""
   },
   "dependencies": {
+    "@h4shed/mcp-core": "*"
     "@h4shed/mcp-core": "^1.0.4"
   },
   "devDependencies": {
