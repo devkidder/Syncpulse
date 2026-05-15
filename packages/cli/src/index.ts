@@ -2,7 +2,7 @@
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import type { Argv } from "yargs";
+import type { Argv, Arguments } from "yargs";
 
 import { init } from "./init.js";
 import { list } from "./list.js";
@@ -47,6 +47,11 @@ async function runInteractive() {
   console.log("👋 Goodbye");
 }
 
+async function launchSyncPulsePanel() {
+  await runBootSequence();
+  showSyncPulseDashboard();
+}
+
 // If no command provided → launch UI
 if (hideBin(process.argv).length === 0) {
   runInteractive();
@@ -66,8 +71,24 @@ if (hideBin(process.argv).length === 0) {
           describe: "Skill name",
           type: "string",
         }),
-      async (argv: any) => {
-        await add(argv.skill);
+      async (argv: Arguments) => {
+        await add(argv.skill as string);
+      }
+    )
+    .command(
+      "panel",
+      "Launch the SyncPulse panel directly",
+      {},
+      async () => {
+        await launchSyncPulsePanel();
+      }
+    )
+    .command(
+      "syncpulse",
+      "Alias for launching the SyncPulse panel",
+      {},
+      async () => {
+        await launchSyncPulsePanel();
       }
     )
     .command(
@@ -78,8 +99,8 @@ if (hideBin(process.argv).length === 0) {
           describe: "Skill name",
           type: "string",
         }),
-      async (argv: any) => {
-        await remove(argv.skill);
+      async (argv: Arguments) => {
+        await remove(argv.skill as string);
       }
     )
     .parse();
