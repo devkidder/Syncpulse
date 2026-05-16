@@ -77,7 +77,8 @@ function isValidJWT(token: string): boolean {
     }
 
     return true;
-  } catch (error) {
+  } catch {
+    // Token validation failed, return false
     return false;
   }
 }
