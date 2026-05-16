@@ -262,7 +262,7 @@ export const generateComponentTool: ToolDefinition = {
 
   async handler(input: Record<string, unknown>): Promise<Record<string, unknown>> {
     try {
-      const params = input as ComponentInput;
+      const params = input as unknown as ComponentInput;
       const html = generateComponent(params);
 
       return {
