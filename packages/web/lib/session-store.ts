@@ -344,7 +344,7 @@ export const SessionStore = {
     usersMap.set(email, {
       email,
       userId,
-      password,
+      password: bcryptjs.hashSync(password, 10),
       passwordChanged: true, // Password was set during signup
     });
 
