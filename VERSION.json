@@ -136,7 +136,7 @@
       "@h4shed/skill-mermaid-terminal",
       "@h4shed/skill-ux-journeymapper",
       "@h4shed/skill-svg-generator",
-      "@h4shed/skill-project-manager-skill",
+      "@h4shed/skill-project-manager",
       "@h4shed/skill-project-status-tool",
       "@h4shed/skill-daily-review",
       "@h4shed/multi-account-session-tracking",
