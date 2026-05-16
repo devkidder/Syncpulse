@@ -224,7 +224,7 @@ const ANIMATED_HERO = `
 </div>`;
 
 function generateComponent(input: ComponentInput): string {
-  const { component = "button", animated = true } = input;
+  const { component = "button" } = input;
 
   const components: Record<string, string> = {
     button: ANIMATED_BUTTON,
