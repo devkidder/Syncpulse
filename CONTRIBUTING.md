@@ -347,6 +347,32 @@ When adding features, update relevant documentation:
 - `docs/API_REFERENCE.md` — API documentation
 - `docs/releases/RELEASE_NOTES.md` — Update with new features
 
+### Documentation Maintenance
+
+When moving or restructuring documentation files:
+
+1. **Update internal file references** — Check all markdown links within the moved file
+   ```bash
+   # Example: If moving ARCHITECTURE.md from root to docs/architecture/
+   # Change: [./SKILLS_GUIDE.md](./SKILLS_GUIDE.md)
+   # To: [../SKILLS_GUIDE.md](../SKILLS_GUIDE.md)
+   ```
+
+2. **Find external references** — Search for references to the moved file
+   ```bash
+   grep -r "ARCHITECTURE.md" . --include="*.md"
+   ```
+
+3. **Update cross-references** — Correct paths in CONTRIBUTING.md, README, and related guides
+
+4. **Verify link structure** — Test all links locally:
+   - Relative paths: `../` for parent directory, `../../` for grandparent
+   - No absolute paths to root `/`
+
+5. **Follow organization guidelines** — See [`docs/README.md`](./docs/README.md) for categorization rules
+
+**Key Principle:** All internal documentation links must be valid after any restructuring. Broken links in documentation are high-priority issues.
+
 ### Code Comments
 
 Document complex logic:
