@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Secured password validation and change workflows
   - Enhanced form submissions with actual API integration (ContactForm, signup page)
 
+### Changed
+- **Professional Documentation Reorganization** — PR #181 restructured root documentation hierarchy
+  - Moved 34 markdown files from root to organized `docs/` subdirectories (architecture, guides, releases, analysis, archive)
+  - Preserved 6 essential root files (README.md, CHANGELOG.md, CLAUDE.md, CONTRIBUTING.md, SECURITY.md, STATUS.md)
+  - Fixed all relative path references to prevent broken links during reorganization
+  - Updated CONTRIBUTING.md with comprehensive workflow guidance including branch naming, release procedures, and skill registry management
+  - Enhanced documentation with workspace install safety guidance and release automation documentation
+
 ### Fixed
 - Fixed session-store.ts references to non-existent `sessionsMap` in `deleteSession()` method
 - Fixed signup page to call `/api/auth/signup` endpoint instead of redirecting without creating account
@@ -22,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added missing rate limiter imports to signup and contact-sales endpoints
 - Improved error handling in signup and contact form submission workflows
 - Enhanced JWT token cookie generation and session management across auth endpoints
+- Fixed CONTRIBUTING.md SKILLS_GUIDE reference path from `docs/guides/SKILLS_GUIDE.md` to `docs/SKILLS_GUIDE.md`
+- Updated Node.js version requirement from 18+ to 20.x (tested on 20.x and 22.x LTS) in documentation
 
 ## [1.1.1] - 2026-05-16
 

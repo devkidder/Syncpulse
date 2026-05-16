@@ -252,10 +252,10 @@ Alert if:
 
 ## Support & Documentation
 
-- **Performance Guide:** [BENCHMARK_GUIDE.md](packages/skills/syncpulse/benchmarks/BENCHMARK_GUIDE.md)
-- **Release Notes:** [RELEASE_NOTES_v0.2.2.md](RELEASE_NOTES_v0.2.2.md)
-- **Performance Analysis:** [syncpulse-performance-analysis.md](docs/syncpulse-performance-analysis.md)
-- **Specifications:** [release-targets.json](packages/skills/syncpulse/benchmarks/release-targets.json)
+- **Performance Guide:** [BENCHMARK_GUIDE.md](../../packages/skills/syncpulse/benchmarks/BENCHMARK_GUIDE.md)
+- **Release Notes:** [RELEASE_NOTES_v0.2.2.md](../releases/RELEASE_NOTES_v0.2.2.md)
+- **Performance Analysis:** [syncpulse-performance-analysis.md](../syncpulse-performance-analysis.md)
+- **Specifications:** [release-targets.json](../../packages/skills/syncpulse/benchmarks/release-targets.json)
 
 ## Version Compatibility
 
