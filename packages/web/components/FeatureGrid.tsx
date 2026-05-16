@@ -2,9 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Icon from './Icon';
-import type { designTokens } from '@h4shed/skill-frontend-design';
-
-type IconName = keyof typeof designTokens.icons;
+import type { IconName } from '@/lib/design-tokens';
 
 interface Feature {
   icon: IconName;

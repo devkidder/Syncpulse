@@ -1,16 +1,16 @@
 'use client';
 
-import { designTokens } from '@h4shed/skill-frontend-design';
+import { getIconPath, type IconName } from '@/lib/design-tokens';
 
 interface IconProps {
-  name: keyof typeof designTokens.icons;
+  name: IconName;
   size?: number;
   className?: string;
   color?: string;
 }
 
 export default function Icon({ name, size = 24, className = '', color }: IconProps) {
-  const iconPath = designTokens.icons[name];
+  const iconPath = getIconPath(name);
   if (!iconPath) return null;
 
   return (

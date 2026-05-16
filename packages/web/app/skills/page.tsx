@@ -8,6 +8,7 @@ import { ChevronRight } from 'lucide-react';
 interface ToolCategory {
   name: string;
   description: string;
+  icon?: string;
   tools: Array<{
     name: string;
     description: string;
