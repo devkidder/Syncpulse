@@ -371,6 +371,32 @@ Contributions are welcome. Please ensure:
 - Accessibility standards are maintained
 - Tokens follow the naming conventions
 
+## Icon System
+
+This package also includes the **24-Icon System** for SyncPulse:
+
+```typescript
+import { Icon } from '@h4shed/design-tokens/icons';
+
+// Navigation icons
+<Icon name="home" size="md" color="primary" />
+<Icon name="dashboard" size="md" color="primary" />
+<Icon name="settings" size="md" color="primary" />
+
+// Status icons
+<Icon name="active" color="success" />
+<Icon name="error" color="danger" />
+<Icon name="pending" color="primary" />
+
+// Agent icons
+<Icon name="orchestrator" size="lg" color="primary" />
+<Icon name="sentinel" size="lg" color="warning" />
+<Icon name="analyst" size="lg" color="secondary" />
+<Icon name="executor" size="lg" color="success" />
+```
+
+See [ICONS_GUIDE.md](./ICONS_GUIDE.md) for complete icon documentation.
+
 ## Related Packages
 
 - `@h4shed/ui-components` - UI component library using these tokens

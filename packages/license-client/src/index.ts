@@ -25,7 +25,7 @@ export function validateStoredLicense(): boolean {
 
     const result = LicenseValidator.validateLicense(token);
     return result.valid;
-  } catch (_error) {
+  } catch {
     return false;
   }
 }
@@ -42,7 +42,7 @@ export function getStoredLicenseStatus() {
 
     const result = LicenseValidator.validateLicense(token);
     return result;
-  } catch (_error) {
+  } catch {
     return null;
   }
 }

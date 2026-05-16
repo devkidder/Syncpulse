@@ -33,8 +33,9 @@ export class LicenseStorage {
 
       // Ensure directory has restrictive permissions (0700 = rwx------)
       fs.chmodSync(STORAGE_DIR, 0o700);
-    } catch (error) {
-      throw new Error(`Failed to create license storage directory: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to create license storage directory: ${errorMessage}`);
     }
   }
 
@@ -50,8 +51,9 @@ export class LicenseStorage {
         mode: 0o600,
         encoding: 'utf-8'
       });
-    } catch (error) {
-      throw new Error(`Failed to save license: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to save license: ${errorMessage}`);
     }
   }
 
@@ -66,8 +68,9 @@ export class LicenseStorage {
 
       const token = fs.readFileSync(LICENSE_FILE, 'utf-8').trim();
       return token || null;
-    } catch (error) {
-      throw new Error(`Failed to load license: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to load license: ${errorMessage}`);
     }
   }
 
@@ -88,8 +91,9 @@ export class LicenseStorage {
         mode: 0o600,
         encoding: 'utf-8'
       });
-    } catch (error) {
-      throw new Error(`Failed to save license cache: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to save license cache: ${errorMessage}`);
     }
   }
 
@@ -110,7 +114,7 @@ export class LicenseStorage {
       }
 
       return null;
-    } catch (error) {
+    } catch (_err) {
       return null;
     }
   }
@@ -127,8 +131,9 @@ export class LicenseStorage {
       if (fs.existsSync(LICENSE_CACHE_FILE)) {
         fs.unlinkSync(LICENSE_CACHE_FILE);
       }
-    } catch (error) {
-      throw new Error(`Failed to clear license: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to clear license: ${errorMessage}`);
     }
   }
 
@@ -156,7 +161,7 @@ export class LicenseStorage {
       });
 
       return machineId;
-    } catch (error) {
+    } catch (_err) {
       // If we can't persist, generate and return a temporary one
       return this.generateMachineId();
     }
@@ -183,7 +188,7 @@ export class LicenseStorage {
         .substring(0, 32);
 
       return `machine_${hash}`;
-    } catch (_error) {
+    } catch {
       // Fallback: generate random ID
       return `machine_${crypto.randomBytes(16).toString('hex')}`;
     }
@@ -206,7 +211,7 @@ export class LicenseStorage {
         return stats.mtime;
       }
       return null;
-    } catch (_error) {
+    } catch {
       return null;
     }
   }

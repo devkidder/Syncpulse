@@ -65,15 +65,17 @@ export class LicenseValidator {
         daysRemaining: expirationStatus.daysRemaining,
         inGracePeriod: expirationStatus.inGracePeriod
       };
-    } catch (error: unknown) {
+    } catch (err: unknown) {
       let errorMessage = 'Invalid license format';
 
-      if (error instanceof jwt.TokenExpiredError) {
+      if (err instanceof jwt.TokenExpiredError) {
         errorMessage = 'License token expired';
-      } else if (error instanceof jwt.JsonWebTokenError) {
-        errorMessage = `Invalid JWT: ${error.message}`;
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
+      } else if (err instanceof jwt.JsonWebTokenError) {
+        errorMessage = `Invalid JWT: ${err.message}`;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      } else {
+        errorMessage = String(err);
       }
 
       return {

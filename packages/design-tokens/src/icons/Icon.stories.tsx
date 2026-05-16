@@ -5,7 +5,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon, IconGrid, IconBox } from './Icon';
-import type { IconName, IconSize, IconColor } from '../types/icons';
+import type { IconName, IconColor } from '../types/icons';
 import { getAllIconNames, getIconsByCategory } from './registry';
 
 const meta: Meta<typeof Icon> = {

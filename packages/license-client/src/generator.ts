@@ -193,8 +193,9 @@ export class LicenseGenerator {
       });
 
       return token;
-    } catch (error) {
-      throw new Error(`Failed to sign license: ${error}`);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to sign license: ${errorMessage}`);
     }
   }
 
