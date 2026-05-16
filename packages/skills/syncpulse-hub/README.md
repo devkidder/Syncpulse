@@ -68,9 +68,27 @@ node scripts/validate-deployment.sh
 
 ## Documentation
 
-- **Architecture**: See SYNCPULSE_INTEGRATION_STRATEGY.md
-- **Status**: See REVISED_ASSESSMENT_POST_INSTALL.md
-- **Setup**: See scripts/setup-syncpulse-hub.sh
+### Comprehensive Guides
+- **[Complete Ecosystem](../../docs/SYNCPULSE_HUB_ECOSYSTEM.md)** — Full registry, package inventory, and integration guide
+- **[Architecture](../../docs/SYNCPULSE_ARCHITECTURE.md)** — System design and orchestration details
+- **[Developer Guide](../../docs/SYNCPULSE_DEVELOPER_GUIDE.md)** — Development and integration instructions
+- **[Integration Strategy](../../docs/architecture/SYNCPULSE_INTEGRATION_STRATEGY.md)** — Detailed integration patterns
+
+### Setup & Configuration
+- **[Setup Script](../../scripts/setup-syncpulse-hub.sh)** — Automated ecosystem setup
+- **[Release Roadmap](../../docs/RELEASES.md)** — v1.2.0 - v2.0.0 release timeline
+
+## Package Inventory
+
+**Published (9 skills):**
+- @h4shed/skill-algorithmic-art, ascii-mockup, canvas-design, frontend-design, theme-factory, mcp-builder, pre-deploy-validator, skill-creator, underworld-writer
+
+**Ready for v1.2.0 (8 skills):**
+- mermaid-terminal, ux-journeymapper, svg-generator, project-manager, project-status-tool, daily-review, multi-account-session-tracking, linkedin-master-journalist
+
+**Planned (Wave 1-3):** ~40 skills scheduled for v1.3.0 - v2.0.0
+
+See [SYNCPULSE_HUB_ECOSYSTEM.md](../../docs/SYNCPULSE_HUB_ECOSYSTEM.md) for complete inventory.
 
 ## License
 

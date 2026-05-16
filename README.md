@@ -347,11 +347,13 @@ npm run publish:prepare          # Prepare versions for publish
 | Resource | Purpose |
 |----------|---------|
 | [docs/](./docs/) | Documentation directory index |
+| [SYNCPULSE_HUB_ECOSYSTEM.md](./docs/SYNCPULSE_HUB_ECOSYSTEM.md) | **Complete package registry & ecosystem guide** 🆕 |
 | [QUICKSTART.md](./docs/getting-started/QUICKSTART.md) | Get started in minutes |
 | [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | System design & internals |
 | [SKILLS_GUIDE.md](./docs/SKILLS_GUIDE.md) | Build custom skills |
 | [API_REFERENCE.md](./docs/API_REFERENCE.md) | Complete API docs |
 | [ROADMAP.md](./docs/ROADMAP.md) | Published/missing/planned skills |
+| [RELEASES.md](./docs/RELEASES.md) | Versioned release planning (v1.2.0 - v2.0.0) |
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | How to contribute |
 | [VERSION.json](./VERSION.json) | Release metadata and version authority |
 | [registry/REGISTRY.md](./registry/REGISTRY.md) | Authoritative package inventory |
