@@ -52,7 +52,9 @@ export async function POST(request: NextRequest) {
           </html>
         `;
 
-        // TODO: Implement actual email sending via nodemailer or your email service
+        // IMPORTANT: Email sending is not implemented. Before production, integrate:
+        // TODO: Install nodemailer or use a managed email service (SendGrid, AWS SES, etc.)
+        // TODO: Uncomment and complete the sendMail implementation below
         // Example for nodemailer:
         // const transporter = nodemailer.createTransport({
         //   host: process.env.SMTP_HOST,
@@ -104,7 +106,7 @@ export async function POST(request: NextRequest) {
 
     // In production with email sending enabled, emphasize that they should check email
     if (!isDevelopment && process.env.SMTP_HOST) {
-      responseData.message = `Magic link sent to ${email}. Please check your email to complete sign-in.`;
+      responseData.message = `Magic link generated for ${email}. Email delivery not yet implemented - see packages/web/app/api/auth/magic-link/request/route.ts for setup.`;
     }
 
     return NextResponse.json(responseData, { status: 200 });
