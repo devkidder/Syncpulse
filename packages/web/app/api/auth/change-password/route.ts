@@ -44,7 +44,7 @@ function verifyJWT(token: string): { email: string; userId: string } | null {
     if (payload.exp && now > payload.exp) return null;
 
     return { email: payload.email, userId: payload.sub };
-  } catch (error) {
+  } catch {
     return null;
   }
 }
