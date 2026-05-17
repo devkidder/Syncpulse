@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Zap } from 'lucide-react';
 import SwarmVisualizer from '@/components/SwarmVisualizer';
 import RoadmapEditor from '@/components/RoadmapEditor';
 import TaskMonitor from '@/components/TaskMonitor';
@@ -28,8 +29,11 @@ export default function Home() {
             className="flex items-center justify-between"
           >
             <div>
-              <h1 className="text-4xl font-bold glow-accent">⚡ SyncPulse</h1>
-              <p className="text-swarm-tertiary text-sm mt-1">Agent Swarm Commander</p>
+              <div className="flex items-center gap-2 mb-1">
+                <Zap className="w-8 h-8 text-swarm-accent" />
+                <h1 className="text-4xl font-bold glow-accent">SyncPulse</h1>
+              </div>
+              <p className="text-swarm-tertiary text-sm">Agent Swarm Commander</p>
             </div>
             <div className="text-right flex flex-col items-end gap-2">
               <VersionBadge variant="normal" showBuildNumber={false} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, Zap } from 'lucide-react';
 import PricingPlans from '@/components/PricingPlans';
 import FeatureGrid from '@/components/FeatureGrid';
 import FeaturedSection from '@/components/FeaturedSection';
@@ -20,8 +20,9 @@ export default function SalesPage() {
       <header className="border-b border-swarm-accent/20 sticky top-0 z-40 glass">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold glow-accent">⚡ SyncPulse</h1>
+            <div className="flex items-center gap-2">
+              <Zap className="w-7 h-7 text-swarm-accent" />
+              <h1 className="text-3xl font-bold glow-accent">SyncPulse</h1>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a

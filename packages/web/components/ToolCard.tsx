@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import React from 'react';
 
 interface ToolCardProps {
   name: string;
   description: string;
-  icon: string;
+  icon: string | React.ReactNode;
   url?: string;
   tags?: string[];
   status?: 'stable' | 'beta' | 'new';
@@ -35,7 +36,13 @@ export default function ToolCard({
       <div className="h-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-lg p-6 hover:border-swarm-accent/50 transition-all duration-300 glass">
         {/* Icon and Header */}
         <div className="flex items-start justify-between mb-4">
-          <div className="text-4xl">{icon}</div>
+          <div className="w-12 h-12 bg-swarm-accent/20 rounded-lg flex items-center justify-center text-swarm-accent group-hover:bg-swarm-accent/30 transition-colors">
+            {typeof icon === 'string' ? (
+              <span className="text-2xl">{icon}</span>
+            ) : (
+              <div className="scale-150">{icon}</div>
+            )}
+          </div>
           {url && (
             <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-swarm-accent transition-colors opacity-0 group-hover:opacity-100" />
           )}

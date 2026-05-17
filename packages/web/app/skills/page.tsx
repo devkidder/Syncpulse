@@ -2,7 +2,22 @@
 
 import { motion } from 'framer-motion';
 import ToolCard from '@/components/ToolCard';
-import { ChevronRight } from 'lucide-react';
+import {
+  ChevronRight,
+  Palette,
+  Hammer,
+  Zap,
+  Mail,
+  Grid3x3,
+  Lock,
+  Film,
+  Rocket,
+  Lightbulb,
+  Sparkles,
+  BarChart3,
+  GitBranch,
+  Code
+} from 'lucide-react';
 
 interface ToolCategory {
   name: string;
@@ -17,15 +32,30 @@ interface ToolCategory {
   }>;
 }
 
+const iconMap: Record<string, React.ReactNode> = {
+  palette: <Palette className="w-5 h-5" />,
+  hammer: <Hammer className="w-5 h-5" />,
+  zap: <Zap className="w-5 h-5" />,
+  mail: <Mail className="w-5 h-5" />,
+  grid: <Grid3x3 className="w-5 h-5" />,
+  lock: <Lock className="w-5 h-5" />,
+  film: <Film className="w-5 h-5" />,
+  rocket: <Rocket className="w-5 h-5" />,
+  lightbulb: <Lightbulb className="w-5 h-5" />,
+  sparkles: <Sparkles className="w-5 h-5" />,
+  chart: <BarChart3 className="w-5 h-5" />,
+  code: <Code className="w-5 h-5" />,
+};
+
 const toolCategories: ToolCategory[] = [
   {
-    name: '🎨 Design & Creative',
+    name: 'Design & Creative',
     description: 'Tools for visual design, art generation, and UI/UX creation',
     tools: [
       {
         name: 'Algorithmic Art',
         description: 'Generate procedural art and visual effects using p5.js',
-        icon: '🎨',
+        icon: 'palette',
         url: 'https://www.npmjs.com/package/@h4shed/skill-algorithmic-art',
         tags: ['generative', 'p5.js', 'visualization'],
         status: 'stable'
@@ -33,7 +63,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Canvas Design',
         description: 'SVG-based visual design and graphic creation',
-        icon: '🖌️',
+        icon: 'palette',
         url: 'https://www.npmjs.com/package/@h4shed/skill-canvas-design',
         tags: ['svg', 'graphics', 'design'],
         status: 'stable'
@@ -41,7 +71,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Frontend Design',
         description: 'HTML/CSS component design and prototyping',
-        icon: '💻',
+        icon: 'code',
         url: 'https://www.npmjs.com/package/@h4shed/skill-frontend-design',
         tags: ['html', 'css', 'components'],
         status: 'stable'
@@ -49,7 +79,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Theme Factory',
         description: 'Design system generation and theme creation',
-        icon: '🎭',
+        icon: 'palette',
         url: 'https://www.npmjs.com/package/@h4shed/skill-theme-factory',
         tags: ['design-system', 'theming', 'tokens'],
         status: 'stable'
@@ -57,7 +87,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'ASCII Mockup',
         description: 'Mobile-first wireframe designs using ASCII art',
-        icon: '📱',
+        icon: 'grid',
         url: 'https://www.npmjs.com/package/@h4shed/skill-ascii-mockup',
         tags: ['wireframing', 'ascii', 'mobile'],
         status: 'stable'
@@ -65,20 +95,20 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'SVG Generator',
         description: 'Automated SVG asset generation and manipulation',
-        icon: '⚙️',
+        icon: 'sparkles',
         tags: ['svg', 'automation', 'graphics'],
         status: 'beta'
       }
     ]
   },
   {
-    name: '🛠️ Development Tools',
+    name: 'Development Tools',
     description: 'Code generation, scaffolding, and development utilities',
     tools: [
       {
         name: 'MCP Builder',
         description: 'MCP server scaffolding and skill generation',
-        icon: '🔧',
+        icon: 'hammer',
         url: 'https://www.npmjs.com/package/@h4shed/skill-mcp-builder',
         tags: ['mcp', 'scaffolding', 'generator'],
         status: 'stable'
@@ -86,7 +116,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Skill Creator',
         description: 'Custom skill builder with full MCP integration',
-        icon: '⚡',
+        icon: 'zap',
         url: 'https://www.npmjs.com/package/@h4shed/skill-skill-creator',
         tags: ['mcp', 'skills', 'generator'],
         status: 'stable'
@@ -94,7 +124,7 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Pre-Deploy Validator',
         description: 'Deployment validation and pre-flight checks',
-        icon: '✅',
+        icon: 'lightbulb',
         url: 'https://www.npmjs.com/package/@h4shed/skill-pre-deploy-validator',
         tags: ['validation', 'deployment', 'checks'],
         status: 'stable'
@@ -102,27 +132,27 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Project Manager',
         description: 'Project planning and management tools',
-        icon: '📋',
+        icon: 'grid',
         tags: ['project', 'management', 'planning'],
         status: 'beta'
       },
       {
         name: 'Mermaid Terminal',
         description: 'Real-time diagram generation in terminal',
-        icon: '📊',
+        icon: 'chart',
         tags: ['diagrams', 'visualization', 'terminal'],
         status: 'new'
       }
     ]
   },
   {
-    name: '📧 Automation & Integration',
+    name: 'Automation & Integration',
     description: 'Email workflows, agent orchestration, and multi-account management',
     tools: [
       {
         name: 'SyncPulse',
         description: 'Multi-agent coordination with 9 email workflow templates',
-        icon: '📬',
+        icon: 'mail',
         url: 'https://www.npmjs.com/package/@h4shed/skill-syncpulse',
         tags: ['email', 'agents', 'automation', 'templates'],
         status: 'stable'
@@ -130,74 +160,74 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Daily Review',
         description: 'Automated daily review and summary generation',
-        icon: '📝',
+        icon: 'lightbulb',
         tags: ['automation', 'review', 'summary'],
         status: 'beta'
       },
       {
         name: 'Multi-Account Session Tracking',
         description: 'Track and manage multiple account sessions',
-        icon: '👥',
+        icon: 'grid',
         tags: ['accounts', 'sessions', 'tracking'],
         status: 'beta'
       },
       {
         name: 'LinkedIn Master Journalist',
         description: 'AI-powered LinkedIn content creation and automation',
-        icon: '📰',
+        icon: 'mail',
         tags: ['linkedin', 'content', 'ai'],
         status: 'new'
       }
     ]
   },
   {
-    name: '📐 Data & Visualization',
+    name: 'Data & Visualization',
     description: 'Data processing, visualization, and analytics tools',
     tools: [
       {
         name: 'UX Journeymapper',
         description: 'Map and visualize user experience journeys',
-        icon: '🗺️',
+        icon: 'chart',
         tags: ['ux', 'journey', 'visualization'],
         status: 'beta'
       },
       {
         name: 'Project Status Tool',
         description: 'Real-time project status monitoring and reporting',
-        icon: '📊',
+        icon: 'chart',
         tags: ['status', 'monitoring', 'reporting'],
         status: 'beta'
       }
     ]
   },
   {
-    name: '🔐 Web3 & Smart Contracts',
+    name: 'Web3 & Smart Contracts',
     description: 'Blockchain, NFT generation, and smart contract tools',
     tools: [
       {
         name: 'NFT Generative Art',
         description: 'NFT artwork generation and blockchain assets',
-        icon: '🎨',
+        icon: 'palette',
         tags: ['nft', 'blockchain', 'generative'],
         status: 'beta'
       },
       {
         name: 'Smart Contract Tools',
         description: 'Hardhat, Truffle, and Foundry integration',
-        icon: '⚙️',
+        icon: 'lock',
         tags: ['solidity', 'contracts', 'web3'],
         status: 'beta'
       }
     ]
   },
   {
-    name: '🎬 Content & Creative Writing',
+    name: 'Content & Creative Writing',
     description: 'Narrative generation, character creation, and storytelling',
     tools: [
       {
         name: 'Underworld Writer',
         description: 'Character and world narrative generation',
-        icon: '📖',
+        icon: 'sparkles',
         url: 'https://www.npmjs.com/package/@h4shed/skill-underworld-writer',
         tags: ['writing', 'narrative', 'character'],
         status: 'stable'
@@ -205,27 +235,27 @@ const toolCategories: ToolCategory[] = [
       {
         name: 'Agentic Flow DevKit',
         description: 'Agentic orchestration GUI and A/B-roll planning',
-        icon: '🎥',
+        icon: 'film',
         tags: ['orchestration', 'video', 'editing'],
         status: 'new'
       }
     ]
   },
   {
-    name: '⚙️ DevOps & Infrastructure',
+    name: 'DevOps & Infrastructure',
     description: 'Deployment, configuration, and infrastructure management',
     tools: [
       {
         name: 'Vercel Next.js Deployment',
         description: 'Vercel deployment and Next.js integration',
-        icon: '🚀',
+        icon: 'rocket',
         tags: ['vercel', 'nextjs', 'deployment'],
         status: 'beta'
       },
       {
         name: 'Style Dictionary System',
         description: 'Design tokens and cross-platform theming',
-        icon: '🎨',
+        icon: 'palette',
         tags: ['tokens', 'theming', 'design-system'],
         status: 'beta'
       }
@@ -243,7 +273,10 @@ export default function SkillsPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-5xl font-bold glow-accent mb-2">⚡ Skills Catalog</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <Zap className="w-9 h-9 text-swarm-accent" />
+              <h1 className="text-5xl font-bold glow-accent">Skills Catalog</h1>
+            </div>
             <p className="text-swarm-tertiary text-lg">
               Discover our growing ecosystem of AI-powered tools and skills
             </p>
@@ -282,7 +315,7 @@ export default function SkillsPage() {
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.05 }}
                   >
-                    <ToolCard {...tool} />
+                    <ToolCard {...tool} icon={iconMap[tool.icon as string] || tool.icon} />
                   </motion.div>
                 ))}
               </div>
