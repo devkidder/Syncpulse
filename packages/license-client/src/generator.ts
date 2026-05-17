@@ -144,7 +144,7 @@ export class LicenseGenerator {
   /**
    * Sign a license payload with RS256
    */
-  static signLicense(payload: LicensePayload, privateKey?: string): string {
+  static signLicense(payload: LicensePayload, privateKey?: string | null): string {
     const key = privateKey || this.privateKey;
 
     if (!key) {
