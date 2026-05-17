@@ -129,6 +129,7 @@ export default function StatusPage() {
         if (!response.ok) throw new Error('Failed to fetch status');
         const data = await response.json();
         setStatus(data);
+        setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
