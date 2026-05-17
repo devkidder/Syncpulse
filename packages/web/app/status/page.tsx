@@ -45,6 +45,11 @@ interface StatusResponse {
       filesChanged: number;
       commits: number;
     };
+    qualityMetrics: {
+      testCoverage: string;
+      documentation: string;
+      codeReviewReady: boolean;
+    };
   };
   swarm: {
     agents: {
