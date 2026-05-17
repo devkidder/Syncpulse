@@ -230,3 +230,6 @@ session-*.json
 .vercel/
 .turbo/cache/
 node_modules/.cache/
+.claude-flow/session/
+packages/web/.claude-flow/sessions/
+packages/web/.claude-flow/data/
