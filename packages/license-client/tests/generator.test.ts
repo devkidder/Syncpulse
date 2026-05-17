@@ -245,7 +245,7 @@ describe('LicenseGenerator', () => {
       expect(token).toBeDefined();
       expect(token.split('.').length).toBe(3);
 
-      const decoded = jwt.decode(token);
+      const decoded = jwt.decode(token) as LicensePayload | null;
       expect(decoded?.type).toBe('trial');
     });
 
