@@ -24,8 +24,6 @@ export default function Icon({ name, size = 24, className = '', color }: IconPro
 
   const isStroke = isStrokeIcon(name);
 
-  const isStroke = isStrokeIcon(name);
-
   return (
     <svg
       viewBox="0 0 24 24"

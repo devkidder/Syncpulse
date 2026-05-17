@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown, LogOut, LayoutDashboard } from 'lucide-react';
 import VersionBadge from './VersionBadge';
+import Breadcrumb, { BreadcrumbItem } from './Breadcrumb';
 
 interface NavigationProps {
   isAuthenticated?: boolean;
