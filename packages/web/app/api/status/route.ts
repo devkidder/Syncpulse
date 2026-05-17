@@ -35,7 +35,7 @@ export async function GET(_request: NextRequest) {
     const packageJsonPath = path.join(projectRoot, 'package.json');
     const agentsStorePath = path.join(projectRoot, '.claude-flow', 'agents', 'store.json');
     const swarmStatePath = path.join(projectRoot, '.claude-flow', 'swarm', 'swarm-state.json');
-    const sessionGoalsPath = path.join(projectRoot, '.claude-flow', 'session', 'goals.json');
+    const sessionGoalsPath = path.join(projectRoot, '.claude-flow', 'cache', 'session-goals.json');
 
     let projectVersion = '1.0.0';
     let packageInfo: any = {};

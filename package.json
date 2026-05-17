@@ -67,6 +67,10 @@
     "CONTRIBUTING.md",
     "LICENSE",
     "VERSION.json",
-    "docs/"
+    "docs/",
+    "scripts/swarm-init.js",
+    ".claude-flow/agents/",
+    ".claude-flow/config.yaml",
+    ".claude-flow/swarm/"
   ]
 }
