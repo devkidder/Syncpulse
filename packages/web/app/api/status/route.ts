@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 // Resolve the actual repository root (not the workspace directory)
 function getRepoRoot(): string {
   const workspaceRoot = process.cwd();
@@ -93,7 +95,7 @@ export async function GET(_request: NextRequest) {
             status: swarm.status,
             topology: swarm.topology,
             maxAgents: swarm.maxAgents,
-            createdAt: stateData.timestamp,
+            createdAt: swarm.createdAt || stateData.timestamp,
           };
         }
       } catch (e) {
