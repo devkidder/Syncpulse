@@ -37,6 +37,7 @@ console.log(`   - Agents Store: ${path.relative(projectRoot, agentsStorePath)}`)
 function validateOrCreateSwarmState() {
   let swarmState = null;
   let isValid = false;
+  let previousSwarmId = null;
 
   try {
     // Try to load existing state
@@ -50,6 +51,8 @@ function validateOrCreateSwarmState() {
         if (swarm && swarm.topology && swarm.status) {
           isValid = true;
           swarmState = stateData;
+        } else {
+          previousSwarmId = swarmId;
         }
       }
     }
@@ -88,7 +91,23 @@ function validateOrCreateSwarmState() {
 
     // Write new state
     fs.writeFileSync(swarmStatePath, JSON.stringify(swarmState, null, 2));
+
+    // Update agents to reference the new swarm ID to maintain consistency
+    try {
+      const agentsData = JSON.parse(fs.readFileSync(agentsStorePath, 'utf-8'));
+      Object.values(agentsData.agents || {}).forEach(agent => {
+        agent.config.swarmId = swarmId;
+      });
+      fs.writeFileSync(agentsStorePath, JSON.stringify(agentsData, null, 2));
+    } catch (e) {
+      // If agent update fails, log warning but continue - swarm state is most critical
+      console.warn('⚠️  Warning: Could not update agent swarm IDs during recovery');
+    }
+
     console.log(`✓ Swarm state recreated: ${swarmId}`);
+    if (previousSwarmId) {
+      console.log(`   (Previous swarm ID was invalid or missing: ${previousSwarmId})`);
+    }
   } else {
     console.log(`✓ Existing swarm state validated`);
   }
