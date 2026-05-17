@@ -81,5 +81,5 @@ export interface ActivationInfo {
 
 export enum GracePeriodDays {
   TRIAL_GRACE = 7,
-  COMMERCIAL_GRACE = 7
+  COMMERCIAL_GRACE = 14
 }

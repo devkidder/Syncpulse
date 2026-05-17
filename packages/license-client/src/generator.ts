@@ -4,8 +4,7 @@
  */
 
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import { LicensePayload, LicenseType, LicenseFeatures, TrialLicenseOptions, CommercialLicenseOptions } from './types.js';
+import { LicensePayload, LicenseFeatures, TrialLicenseOptions, CommercialLicenseOptions } from './types.js';
 import { LicenseStorage } from './storage.js';
 
 // Default private key (for testing/development)
@@ -72,7 +71,6 @@ export class LicenseGenerator {
    */
   static generateTrialLicense(options: TrialLicenseOptions = {}): string {
     const days = options.days || 14;
-    const machineId = options.machineId || LicenseStorage.getMachineId();
     const now = new Date();
     const expiresAt = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
 

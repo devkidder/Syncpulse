@@ -239,7 +239,7 @@ EwIDAQAB
   describe('Full Workflow', () => {
     it('should complete full trial to commercial workflow', () => {
       // 1. First install - trial license
-      const trialToken = initializeLicense();
+      const _trialToken = initializeLicense();
       expect(validateStoredLicense()).toBe(true);
 
       // 2. Check trial status
@@ -321,7 +321,7 @@ EwIDAQAB
     });
 
     it('should recover from missing machine-id file', () => {
-      const machineId1 = getMachineId();
+      const _machineId1 = getMachineId();
 
       // Delete the machine-id file
       const storagePath = LicenseStorage.getStoragePath();

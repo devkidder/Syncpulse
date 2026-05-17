@@ -135,7 +135,7 @@ export class LicenseStorage {
       }
 
       return null;
-    } catch (_err) {
+    } catch {
       return null;
     }
   }
@@ -186,7 +186,7 @@ export class LicenseStorage {
       });
 
       return machineId;
-    } catch (_err) {
+    } catch {
       // If we can't persist, generate and return a temporary one
       return this.generateMachineId();
     }
