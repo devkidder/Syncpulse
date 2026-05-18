@@ -33,6 +33,10 @@ export class LicenseStorage {
     }
   }
 
+  static hasLicense(): boolean {
+    return fs.existsSync(LICENSE_FILE);
+  }
+
   static saveLicenseCache(cacheData: Record<string, unknown>): void {
     this.ensureDirectory();
     fs.writeFileSync(LICENSE_CACHE, JSON.stringify(cacheData, null, 2), { mode: 0o600 });

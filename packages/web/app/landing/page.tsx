@@ -269,7 +269,7 @@ export default function LandingPage() {
 
                 {/* Code */}
                 <pre className="font-mono text-sm text-slate-200 mb-6 overflow-x-auto">
-                  <code>{`npm install -g @h4shed/mcp-cli\n\n# Start your first swarm\nmcp-cli swarm:init\n\n# View license status\nmcp-cli license:status`}</code>
+                  <code>{`npm install -g @h4shed/mcp-cli\n\n# Initialize your first MCP server\nfused-gaming-mcp init\n\n# List available skills\nfused-gaming-mcp list`}</code>
                 </pre>
 
                 {/* Copy Button */}
