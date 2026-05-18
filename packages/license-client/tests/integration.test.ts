@@ -5,7 +5,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import os from 'os';
 import {
   validateStoredLicense,
   getStoredLicenseStatus,
@@ -126,9 +125,6 @@ describe('License Client Integration', () => {
   describe('License Expiration & Grace Period', () => {
     it('should detect expired license with valid grace period', () => {
       // Generate an expired license (technically expired but within grace period)
-      const now = new Date();
-      const expiresAt = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000); // 1 day ago
-
       const expiredToken = LicenseGenerator.generateTrialLicense({ days: -1 });
       LicenseStorage.saveLicense(expiredToken);
 
@@ -215,7 +211,7 @@ describe('License Client Integration', () => {
   describe('Full Workflow', () => {
     it('should complete full trial to commercial workflow', () => {
       // 1. First install - trial license
-      const trialToken = initializeLicense();
+      initializeLicense();
       expect(validateStoredLicense()).toBe(true);
 
       // 2. Check trial status
@@ -297,7 +293,7 @@ describe('License Client Integration', () => {
     });
 
     it('should recover from missing machine-id file', () => {
-      const machineId1 = getMachineId();
+      getMachineId();
 
       // Delete the machine-id file
       const storagePath = LicenseStorage.getStoragePath();

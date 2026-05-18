@@ -1,253 +1,112 @@
-/**
- * License Generator
- * Creates and signs license tokens
- */
-
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import { LicensePayload, LicenseType, LicenseFeatures, TrialLicenseOptions, CommercialLicenseOptions } from './types.js';
+import { createPrivateKey, sign } from 'crypto';
+import { LicensePayload, TrialLicenseOptions, CommercialLicenseOptions } from './types.js';
 import { LicenseStorage } from './storage.js';
 
-// Default private key (for testing/development)
-// In production, this should be loaded from a secure vault
-const DEFAULT_PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEA2Z3qX2BTLS39R3wvUL3p+ZnwvXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-QIDAQABAoIBAHkj2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2
-Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2H
-l2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2
-Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2Hl2
-Hl2Hl2ECgYEA7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ
-7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ
-7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ
-7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJ7hkJECgYEA6R8k6R8k6R8k6R8k6R8k6R8k
-6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k
-6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k
-6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k6R8k
-6R8kCgYEAwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvF
-wvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvF
-wvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvF
-wvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwvFwCgYEAr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1W
-r1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1W
-r1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1W
-r1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1W
-r1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1Wr1WCgYBn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1W
-n1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1W
-n1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1W
-n1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1W
-n1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1Wn1W
-n1W==
------END RSA PRIVATE KEY-----`;
+const DEFAULT_PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDFMllQDffT/mQ1
+vy2ACyNQ2MtOL4V3XIvlkHRdZA6pq5xurYj0c1e56urWM6T07zk6r7bItyG+Rv/h
+4LxjCdsjfyQ8OQaRPo3xZmnyO2cAz0VSfs/YM6XLtYzDzDnv7Y06TXMJbHhupYBU
+WQJJSVTv63SsuYcHo0vLKQvng88AVEALclmi88oVSEVWDtw96PgMsC8Pu9MMDNOo
+6J2PqbiS7TVWMcBCJvhVjS5I+TcNdjCKSG+jAh23eY9uqnYWeCAM7PDIm7G7qzpa
+N7mCFvF840vZj9Jbp56msca3xJGZBb74s2JLpbmhmjvmBOz4R1egEwihwghI/RCs
+ZIOm4/h5AgMBAAECggEATcYDSpsPtNkevcHmWJtL9O1kFbSRX5etBz/XXSQC0nFA
+E7i2jK7XGRjpQM0CkKWu/RHjNbtggBKxhe0kb60p9BCHgob9K5iv09cQDvzVrZCR
+5yzjnYIVMEgsueZYrWOT8TwtlDhnMUBt4hZu2+ejq7JCBINxmZYSZRCNxOQL5rUi
+d0Ukl2bFrbo1rI/QJ4TFgeyfWeNqQsHs2SkZTbuLJbR1VGcqAXZo1E4u5nLknKgb
+vd2ML0G3Bbm+1B0KCHnjghRjaBMhrAOQUYdZC1v7x2URjFk8ppxHdm9N/OOuRwqW
+FkQmbjOBcgdRW26pbraoRkU/i387xtjy5gT7gO3B5wKBgQDm6lUlVw1DVHjp1j9O
+KzVuH4PtIdyGWGfnpmbjew1QsF1VQOUUvrRxkjEgyqdc880yLFN1Aryk0xZ9KBrK
+ApiyCDJXo+oOjml6AcOqpNPyo1lqpKJvAnq6i2GLoNlA8/EhqET7DsyOQH8Z6gQ8
+2xo9TI4+giYv/1cGGVFRwz/8BwKBgQDanlAE9rIT4PcZZAO+RhNMN1Mee1ZAykiS
+3F734TWdo0mmH/s1XU1QMtEfsjXK6V1mhTRha1G+67LZfG/J+TOPwK2HmnCtj1id
+8TRzyBTJL0+VeYlATwJkJYv6nGguX7t636Y2NUwFyE+B7eYbNbaLT0UCDiZX1/rz
+8tXaSsBHfwKBgE7kqviZ+F8TokgKOhDD9HpObC19jzGbTMy5bpez+AWkbA7voBTp
+Xw8aaoyQkIPSjD3jJRRqPfd2Y02ZgSWZo3/YCxMkXphgkarspWRM8lkI9EjaPOD+
+kN3hNw+UggWOEsl0CzVXhg3n/UTmTlJYbWuaF1NF9jQZ4iqkRcNQmTDLAoGAFQWw
+MCoAycSSPlDNw1g9ttCDH6VAkA5jmCu0viVb4IK5LE5a+7CzJIkebuvWHGMAZkFc
+3hlRzQghNKSwoz1hZetjRGzndOkZ3mY5YwDUbtwrzPXY6uQuGK87nKe5pOvzvUcQ
+Vpoda1jtvFLCE8/Ac/j1a9MsgLn2Gcs6ITma78UCgYEAxORZAdvtzCLS1LMUn5jU
+bTZJp7TktHigBi9VkPmCe2sw/ycCCAkuRL7/yfqWte2+oAOkpHEO/dCcZewFxytX
+9xV3hyCthzAsgzS+OfKS3Y64/8Qtin4TK0LqVp2n5GZKSKNW+s0lDpFXZvHnRVyI
+8BzuPaN9SJmUTDKls/BaRy0=
+-----END PRIVATE KEY-----`;
 
 export class LicenseGenerator {
-  private static privateKey: string = DEFAULT_PRIVATE_KEY;
-  private static issuer: string = 'syncpulse.io';
-  private static productName: string = 'syncpulse-cli';
-  private static productVersion: string = '1.0.0';
-
-  /**
-   * Set the private key for signing licenses
-   */
-  static setPrivateKey(privateKey: string): void {
-    this.privateKey = privateKey;
-  }
-
-  /**
-   * Set the issuer claim
-   */
-  static setIssuer(issuer: string): void {
-    this.issuer = issuer;
-  }
-
-  /**
-   * Set product metadata
-   */
-  static setProductMetadata(name: string, version: string): void {
-    this.productName = name;
-    this.productVersion = version;
-  }
-
-  /**
-   * Generate a trial license
-   */
   static generateTrialLicense(options: TrialLicenseOptions = {}): string {
-    const days = options.days || 14;
-    const machineId = options.machineId || LicenseStorage.getMachineId();
+    const days = options.days ?? 14;
+    const product = options.product ?? 'syncpulse-cli';
+    const version = options.version ?? '1.2.0';
+
     const now = new Date();
     const expiresAt = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+
+    const machineId = LicenseStorage.getMachineId();
 
     const payload: LicensePayload = {
       type: 'trial',
       issued_at: now.toISOString(),
       expires_at: expiresAt.toISOString(),
-      product: this.productName,
-      version: this.productVersion,
-      trial_days: days,
-      features: this.getDefaultTrialFeatures(),
-      iss: this.issuer
-    };
-
-    return this.signLicense(payload, this.privateKey);
-  }
-
-  /**
-   * Generate a commercial license
-   */
-  static generateCommercialLicense(options: CommercialLicenseOptions): string {
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year default
-    const machineId = options.machineId || LicenseStorage.getMachineId();
-
-    const payload: LicensePayload = {
-      type: 'commercial',
-      issued_at: now.toISOString(),
-      expires_at: expiresAt.toISOString(),
-      product: this.productName,
-      version: this.productVersion,
-      sub: options.email,
+      product,
+      version,
       features: {
-        ...this.getDefaultCommercialFeatures(),
-        ...options.features
+        concurrent_agents: 1,
+        storage_gb: 10,
+        team_members: 1,
+        priority_support: false,
+        custom_branding: false,
       },
-      iss: this.issuer,
       activation: {
         activated_at: now.toISOString(),
         machine_id: machineId,
-        license_key: options.licenseKey
-      }
+        license_key: `trial_${Date.now()}`,
+      },
     };
 
-    return this.signLicense(payload, this.privateKey);
+    return this.signLicense(payload);
   }
 
-  /**
-   * Generate a team license
-   */
-  static generateTeamLicense(customerId: string, email: string): string {
+  static generateCommercialLicense(options: CommercialLicenseOptions, privateKey?: string): string {
     const now = new Date();
-    const expiresAt = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year default
-    const machineId = LicenseStorage.getMachineId();
 
     const payload: LicensePayload = {
-      type: 'team',
+      type: options.type,
       issued_at: now.toISOString(),
-      expires_at: expiresAt.toISOString(),
-      product: this.productName,
-      version: this.productVersion,
-      sub: email,
-      features: this.getDefaultTeamFeatures(),
-      iss: this.issuer,
+      expires_at: options.expiresAt.toISOString(),
+      product: 'syncpulse-cli',
+      version: options.version ?? '1.2.0',
+      features: options.features,
       activation: {
         activated_at: now.toISOString(),
-        machine_id: machineId,
-        license_key: `team_${customerId}`
-      }
+        machine_id: options.machineId ?? LicenseStorage.getMachineId(),
+        license_key: options.licenseKey,
+      },
     };
 
-    return this.signLicense(payload, this.privateKey);
+    return this.signLicense(payload, privateKey);
   }
 
-  /**
-   * Generate an enterprise license
-   */
-  static generateEnterpriseLicense(customerId: string, email: string): string {
-    const now = new Date();
-    const expiresAt = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year default
-    const machineId = LicenseStorage.getMachineId();
-
-    const payload: LicensePayload = {
-      type: 'enterprise',
-      issued_at: now.toISOString(),
-      expires_at: expiresAt.toISOString(),
-      product: this.productName,
-      version: this.productVersion,
-      sub: email,
-      features: this.getDefaultEnterpriseFeatures(),
-      iss: this.issuer,
-      activation: {
-        activated_at: now.toISOString(),
-        machine_id: machineId,
-        license_key: `enterprise_${customerId}`
-      }
+  private static signLicense(payload: LicensePayload, privateKey: string = DEFAULT_PRIVATE_KEY): string {
+    const header = {
+      alg: 'RS256',
+      typ: 'JWT',
+      kid: 'syncpulse-2026',
     };
 
-    return this.signLicense(payload, this.privateKey);
-  }
+    const headerB64 = Buffer.from(JSON.stringify(header)).toString('base64url');
+    const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
 
-  /**
-   * Sign a license payload with RS256
-   */
-  static signLicense(payload: LicensePayload, privateKey?: string): string {
-    const key = privateKey || this.privateKey;
+    const key = createPrivateKey({
+      key: privateKey,
+      format: 'pem',
+    });
 
-    try {
-      const token = jwt.sign(payload, key, {
-        algorithm: 'RS256',
-        header: {
-          kid: 'syncpulse-2026'
-        }
-      });
+    const signature = sign('sha256', Buffer.from(`${headerB64}.${payloadB64}`), {
+      key,
+      format: 'pem',
+      type: 'pkcs8',
+    });
 
-      return token;
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : String(err);
-      throw new Error(`Failed to sign license: ${errorMessage}`);
-    }
-  }
-
-  /**
-   * Get default features for trial licenses
-   */
-  private static getDefaultTrialFeatures(): LicenseFeatures {
-    return {
-      concurrent_agents: 1,
-      storage_gb: 10,
-      team_members: 1,
-      priority_support: false,
-      custom_branding: false
-    };
-  }
-
-  /**
-   * Get default features for commercial licenses
-   */
-  private static getDefaultCommercialFeatures(): LicenseFeatures {
-    return {
-      concurrent_agents: 5,
-      storage_gb: 100,
-      team_members: 1,
-      priority_support: true,
-      custom_branding: false
-    };
-  }
-
-  /**
-   * Get default features for team licenses
-   */
-  private static getDefaultTeamFeatures(): LicenseFeatures {
-    return {
-      concurrent_agents: 10,
-      storage_gb: 500,
-      team_members: 5,
-      priority_support: true,
-      custom_branding: false
-    };
-  }
-
-  /**
-   * Get default features for enterprise licenses
-   */
-  private static getDefaultEnterpriseFeatures(): LicenseFeatures {
-    return {
-      concurrent_agents: 100,
-      storage_gb: 5000,
-      team_members: 1000,
-      priority_support: true,
-      custom_branding: true
-    };
+    const signatureB64 = signature.toString('base64url');
+    return `${headerB64}.${payloadB64}.${signatureB64}`;
   }
 }

@@ -9,13 +9,13 @@ import { LicenseStorage } from './storage.js';
 
 // Public key for RS256 verification (for production, load from environment)
 const DEFAULT_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Z3qX2BTLS39R3wvUL3p
-+ZnwvXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3qXL3
-QIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxTJZUA330/5kNb8tgAsj
+UNjLTi+Fd1yL5ZB0XWQOqaucbq2I9HNXuerq1jOk9O85Oq+2yLchvkb/4eC8Ywnb
+I38kPDkGkT6N8WZp8jtnAM9FUn7P2DOly7WMw8w57+2NOk1zCWx4bqWAVFkCSUlU
+7+t0rLmHB6NLyykL54PPAFRAC3JZovPKFUhFVg7cPej4DLAvD7vTDAzTqOidj6m4
+ku01VjHAQib4VY0uSPk3DXYwikhvowIdt3mPbqp2FnggDOzwyJuxu6s6Wje5ghbx
+fONL2Y/SW6eeprHGt8SRmQW++LNiS6W5oZo75gTs+EdXoBMIocIISP0QrGSDpuP4
+eQIDAQAB
 -----END PUBLIC KEY-----`;
 
 export class LicenseValidator {
@@ -226,12 +226,19 @@ export class LicenseValidator {
       return result;
     }
 
-    const machineToCheck = expectedMachineId || this.getMachineId();
-
-    if (!this.verifyMachineBinding(result.payload)) {
+    // If expectedMachineId is provided, check against it; otherwise use current machine
+    if (expectedMachineId && result.payload.activation?.machine_id) {
+      if (result.payload.activation.machine_id !== expectedMachineId) {
+        return {
+          valid: false,
+          error: `License is bound to machine ${result.payload.activation.machine_id}, expected ${expectedMachineId}`,
+          payload: result.payload
+        };
+      }
+    } else if (!this.verifyMachineBinding(result.payload)) {
       return {
         valid: false,
-        error: `License is bound to a different machine. Expected: ${machineToCheck}`,
+        error: `License is bound to a different machine. Current: ${this.getMachineId()}`,
         payload: result.payload
       };
     }
