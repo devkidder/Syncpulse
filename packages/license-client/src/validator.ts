@@ -152,7 +152,18 @@ export class LicenseValidator {
       };
     }
 
-    const expirationStatus = this.checkExpiration(cachedPayload);
+    let expirationStatus: ExpirationStatus;
+    try {
+      expirationStatus = this.checkExpiration(cachedPayload);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      return {
+        valid: false,
+        cacheValid: false,
+        cachedPayload,
+        error: `Invalid cached license: ${errorMessage}`
+      };
+    }
 
     // Allow offline validation during grace period
     if (expirationStatus.inGracePeriod) {
