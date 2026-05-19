@@ -15,6 +15,7 @@ export interface LicensePayload {
   product: string;
   version: string;
   features: LicenseFeatures;
+  sub?: string;
   activation?: {
     activated_at: string;
     machine_id: string;

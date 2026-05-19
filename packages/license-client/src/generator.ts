@@ -74,6 +74,7 @@ C+5xo4bL/zxGkXkXAFo=
       expires_at: options.expiresAt.toISOString(),
       product: 'syncpulse-cli',
       version: options.version ?? '1.2.0',
+      sub: options.email,
       features: options.features,
       activation: {
         activated_at: now.toISOString(),
