@@ -93,21 +93,17 @@ const swarmState = {
   }
 };
 
-// Save swarm state
+// Save swarm state (reset on reinitialization)
 const stateFile = path.join(stateDir, 'swarm-state.json');
-const existingState = (() => {
-  try {
-    return JSON.parse(fs.readFileSync(stateFile, 'utf-8'));
-  } catch {
-    return { swarms: {} };
-  }
-})();
+const newState = {
+  swarms: {
+    [swarmId]: swarmState
+  },
+  version: '3.0.1',
+  lastReset: new Date().toISOString()
+};
 
-existingState.swarms = existingState.swarms || {};
-existingState.swarms[swarmId] = swarmState;
-existingState.version = '3.0.0';
-
-fs.writeFileSync(stateFile, JSON.stringify(existingState, null, 2));
+fs.writeFileSync(stateFile, JSON.stringify(newState, null, 2));
 console.log(`✓ Saved swarm state to ${stateFile}`);
 
 // Initialize metrics
