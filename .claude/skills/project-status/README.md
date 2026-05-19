@@ -55,7 +55,7 @@ cd project-status-framework
 ./scripts/setup.sh
 
 # Validate configuration
-node scripts/validate-config.js config.json
+node scripts/validate-config.cjs config.json
 
 # Start monitoring
 ./scripts/monitor-status.sh

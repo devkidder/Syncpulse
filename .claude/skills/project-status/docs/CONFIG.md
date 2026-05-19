@@ -259,7 +259,7 @@ Validate your configuration before deployment:
 
 ```bash
 # Validate against schema
-node scripts/validate-config.js config.json
+node scripts/validate-config.cjs config.json
 
 # Output:
 # ✓ Configuration config.json is valid

@@ -60,7 +60,7 @@ fi
 
 # Validate configuration
 echo "🔍 Validating configuration..."
-node scripts/validate-config.js config.json
+node scripts/validate-config.cjs config.json
 
 echo ""
 echo "✅ Setup Complete!"

@@ -401,9 +401,9 @@ app.get('/dashboard', async (req, res) => {
 | Script | Purpose | Usage |
 |--------|---------|-------|
 | `setup.sh` | Initialize framework and dependencies | `./scripts/setup.sh` |
-| `validate-config.js` | Validate status configuration | `node scripts/validate-config.js config.json` |
+| `validate-config.cjs` | Validate status configuration | `node scripts/validate-config.cjs config.json` |
 | `monitor-status.sh` | Real-time status monitoring dashboard | `./scripts/monitor-status.sh` |
-| `export-metrics.js` | Export metrics to CSV/JSON | `node scripts/export-metrics.js [format]` |
+| `export-metrics.cjs` | Export metrics to CSV/JSON | `node scripts/export-metrics.cjs [format]` |
 | `test-endpoint.sh` | Test status endpoint connectivity | `./scripts/test-endpoint.sh http://localhost:3000` |
 
 ### Running Monitor
@@ -413,7 +413,7 @@ app.get('/dashboard', async (req, res) => {
 ./scripts/monitor-status.sh
 
 # Export current status
-node scripts/export-metrics.js json > status-$(date +%s).json
+node scripts/export-metrics.cjs json > status-$(date +%s).json
 
 # Test endpoint availability
 ./scripts/test-endpoint.sh http://localhost:3000/status
@@ -435,7 +435,7 @@ node scripts/export-metrics.js json > status-$(date +%s).json
 curl http://localhost:3000/status/health
 
 # Verify configuration
-node scripts/validate-config.js config.json
+node scripts/validate-config.cjs config.json
 
 # Review logs
 tail -f logs/status.log

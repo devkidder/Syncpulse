@@ -22,7 +22,7 @@ npm install --legacy-peer-deps
 ---
 
 ### Issue: Configuration Validation Fails
-**Symptoms**: `validate-config.js` returns errors for valid config
+**Symptoms**: `validate-config.cjs` returns errors for valid config
 
 **Cause**: Config schema not found or syntax error
 
@@ -35,7 +35,7 @@ ls -la resources/schemas/config.schema.json
 node -e "console.log(JSON.parse(require('fs').readFileSync('config.json')))"
 
 # Re-run validation
-node scripts/validate-config.js config.json
+node scripts/validate-config.cjs config.json
 ```
 
 ---
@@ -346,7 +346,7 @@ If issues persist:
 1. Check logs: `tail -f logs/status.log`
 2. Enable debug mode in configuration
 3. Test with curl: `curl http://localhost:3000/status | jq`
-4. Review configuration against schema: `node scripts/validate-config.js`
+4. Review configuration against schema: `node scripts/validate-config.cjs`
 5. Check for known issues in documentation
 
 ---
@@ -357,6 +357,6 @@ If issues persist:
 |-------|-------|----------|
 | `Cannot find module 'project-status-framework'` | Package not installed | `npm install project-status-framework` |
 | `EADDRINUSE: port 3000 already in use` | Port conflict | Kill process or use different port |
-| `Configuration validation failed` | Invalid config.json | Run `validate-config.js` to see specific errors |
+| `Configuration validation failed` | Invalid config.json | Run `validate-config.cjs` to see specific errors |
 | `Metrics source timeout` | Source not responding | Increase timeout or check source availability |
 | `RFP deadline in the past` | Invalid deadline date | Update deadline to future date |
