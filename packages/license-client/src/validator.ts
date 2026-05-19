@@ -37,8 +37,10 @@ export class LicenseValidator {
 
   /**
    * Validate a license token (online validation with signature verification)
+   * @param token - The license token to validate
+   * @param checkMachineBinding - Whether to verify machine binding (default: true)
    */
-  static validateLicense(token: string): ValidationResult {
+  static validateLicense(token: string, checkMachineBinding = true): ValidationResult {
     try {
       // Verify JWT signature
       const payload = jwt.verify(token, this.publicKey, {
@@ -56,8 +58,8 @@ export class LicenseValidator {
         };
       }
 
-      // Verify machine binding
-      if (!this.verifyMachineBinding(payload)) {
+      // Verify machine binding (if enabled)
+      if (checkMachineBinding && !this.verifyMachineBinding(payload)) {
         return {
           valid: false,
           error: `License is bound to a different machine. Current: ${this.getMachineId()}`,
@@ -240,10 +242,13 @@ export class LicenseValidator {
   }
 
   /**
-   * Validate with machine ID binding
+   * Validate with machine ID binding (supports both local and remote validation)
+   * @param token - The license token to validate
+   * @param expectedMachineId - Optional machine ID for remote validation; if not provided, validates against current machine
    */
   static validateWithMachineBinding(token: string, expectedMachineId?: string): ValidationResult {
-    const result = this.validateLicense(token);
+    // Skip automatic machine binding check; we'll handle it explicitly
+    const result = this.validateLicense(token, false);
 
     if (!result.valid || !result.payload) {
       return result;
@@ -251,7 +256,7 @@ export class LicenseValidator {
 
     const licenseMachineId = result.payload.activation?.machine_id;
 
-    // If expectedMachineId is provided, check against it
+    // If expectedMachineId is provided, check against it (remote/API validation)
     if (expectedMachineId) {
       if (!licenseMachineId || licenseMachineId !== expectedMachineId) {
         return {
@@ -261,7 +266,7 @@ export class LicenseValidator {
         };
       }
     } else if (licenseMachineId && !this.verifyMachineBinding(result.payload)) {
-      // If no expectedMachineId but license has machine binding, verify against current machine
+      // If no expectedMachineId but license has machine binding, verify against current machine (local validation)
       return {
         valid: false,
         error: `License is bound to a different machine. Current: ${this.getMachineId()}`,
