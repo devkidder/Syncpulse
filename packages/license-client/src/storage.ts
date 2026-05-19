@@ -62,10 +62,13 @@ export class LicenseStorage {
     const platform = os.platform();
 
     // Get MAC address of first non-loopback interface for hardware-specific binding
+    // Sort by interface name to ensure deterministic ordering across reboots
     const networkInterfaces = os.networkInterfaces();
+    const sortedInterfaceNames = Object.keys(networkInterfaces).sort();
     let macAddress = '';
 
-    for (const [, addresses] of Object.entries(networkInterfaces)) {
+    for (const name of sortedInterfaceNames) {
+      const addresses = networkInterfaces[name];
       if (!addresses) continue;
       for (const addr of addresses) {
         if (addr.family === 'IPv4' && !addr.internal) {
