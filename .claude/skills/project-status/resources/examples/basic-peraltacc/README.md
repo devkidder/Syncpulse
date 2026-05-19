@@ -99,4 +99,4 @@ To integrate with existing PeraltaCC systems:
 
 - `config.json` - PeraltaCC configuration
 - `status.js` - Express server setup
-- Template: `../../../templates/basic-status.js`
+- Template: `../../../templates/basic-status.cjs`

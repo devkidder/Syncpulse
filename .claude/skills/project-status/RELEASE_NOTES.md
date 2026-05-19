@@ -79,7 +79,7 @@ Project Status API Framework is a production-ready, reusable skill for building 
   - `test-endpoint.sh` - Endpoint health check and response validation
 
 - **Templates**:
-  - `basic-status.js` - Minimal Express.js implementation
+  - `basic-status.cjs` - Minimal Express.js implementation
 
 - **Examples**:
   - `basic-peraltacc/` - Full PeraltaCC 8-agent swarm configuration with RFP tracking
