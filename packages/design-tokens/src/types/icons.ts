@@ -1,28 +1,32 @@
-/**
- * Icon System Type Definitions
- * Core TypeScript types for the SyncPulse icon system
- */
+// Icon type definitions for the SyncPulse design system
 
-import type { SVGAttributes } from 'react';
+import type React from 'react';
 
-/**
- * All available icon names in the registry
- */
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type IconColor = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'neutral';
+export type IconVariant = 'outline' | 'solid' | 'duotone';
+
+export const ICON_SIZES: Record<IconSize, number> = {
+  xs: 12,
+  sm: 16,
+  md: 24,
+  lg: 32,
+  xl: 48,
+  '2xl': 64,
+};
+
 export type IconName =
-  // Navigation Icons
   | 'home'
   | 'dashboard'
   | 'settings'
   | 'help'
   | 'logout'
-  // Status Icons
   | 'active'
   | 'inactive'
   | 'pending'
   | 'error'
   | 'warning'
   | 'success'
-  // Action Icons
   | 'play'
   | 'pause'
   | 'stop'
@@ -30,50 +34,14 @@ export type IconName =
   | 'rollback'
   | 'delete'
   | 'edit'
-  // Agent Icons
   | 'orchestrator'
   | 'sentinel'
   | 'analyst'
   | 'executor'
-  // Utility Icons
   | 'bell'
   | 'user';
 
-/**
- * Icon size options for consistent scaling
- */
-export type IconSize = 'sm' | 'md' | 'lg' | 'xl';
-
-/**
- * Icon color options for semantic coloring
- */
-export type IconColor = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'neutral';
-
-/**
- * Icon rendering variant style
- */
-export type IconVariant = 'outline' | 'fill';
-
-/**
- * Icon category for grouping and organization
- */
-export type IconCategory = 'navigation' | 'status' | 'action' | 'agent' | 'utility';
-
-/**
- * Complete icon definition structure
- */
-export interface IconDefinition {
-  name: IconName;
-  viewBox: string;
-  path: string | string[];
-  strokeWidth?: number;
-  category: IconCategory;
-}
-
-/**
- * Props for the Icon component
- */
-export interface IconProps extends SVGAttributes<SVGSVGElement> {
+export interface IconProps extends React.SVGAttributes<SVGSVGElement> {
   name: IconName;
   size?: IconSize;
   color?: IconColor;
@@ -83,12 +51,11 @@ export interface IconProps extends SVGAttributes<SVGSVGElement> {
   'aria-label'?: string;
 }
 
-/**
- * Size pixel mappings for different icon sizes
- */
-export const ICON_SIZES: Record<IconSize, number> = {
-  sm: 16,
-  md: 24,
-  lg: 32,
-  xl: 48,
-};
+export interface IconDefinition {
+  name: IconName;
+  viewBox: string;
+  path: string | string[];
+  strokeWidth?: number;
+  category?: string;
+  tags?: string[];
+}

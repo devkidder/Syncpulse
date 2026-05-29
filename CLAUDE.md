@@ -1,5 +1,99 @@
 # CLAUDE.md
 
+## 🚀 Startup Instructions - Run on Session Start
+
+### 1. Install Dependencies
+```bash
+npm install --package-lock-only --ignore-scripts
+npm ci
+npm run build
+```
+
+### 2. Verify Installation
+```bash
+npm run lint
+npm run typecheck
+```
+
+### 3. Configure Environment
+Create `.env.local` if needed:
+```bash
+# Add API keys and environment variables for development
+# Reference: .env.example or docs/CONTRIBUTING.md
+```
+
+### 4. Initialize Git Session
+```bash
+git status
+git remote -v
+git branch -a
+```
+
+### 5. Setup Development Branch
+```bash
+# If working on feature: ensure on correct development branch
+# Example: git checkout claude/inventory-design-system-ko0SC
+git branch --show-current
+```
+
+### 6. Initialize Swarm Orchestration
+The project uses multi-agent coordination. Key components:
+- **Package Structure**: Monorepo with 60+ workspace packages
+- **MCP Skills**: Design system, orchestration, email workflows
+- **Web Dashboard**: Next.js 14 App Router with Framer Motion
+- **Performance Benchmarks**: SyncPulse v0.2.2 with 4/4 targets passing
+- **CI/CD**: GitHub Actions (Node 20.x, 22.x LTS matrix)
+
+### 7. Pre-Task Checklist
+Before starting any task:
+- [ ] Run `npm run build` to verify no build errors
+- [ ] Check `git status` for uncommitted changes
+- [ ] Confirm working on correct development branch
+- [ ] Review CLAUDE.md Agent Notes for recent constraints
+- [ ] Check open PRs and GitHub issues for context
+
+---
+
+## Agent Notes (2026-05-26, NPM Publish Investigation + Auth Endpoint Protection)
+
+### What Was Completed
+1. **Authentication Endpoint Protection** (Commits: 6943afa, dc9b72e, 99936a7, 47c24a3)
+   - Implemented JWT-based auth middleware with role-based access control
+   - Protected `/api/tasks`, `/api/swarms`, `/api/roadmap` endpoints
+   - Created comprehensive authentication documentation and examples
+   - Added security audit documentation for OWASP compliance
+
+2. **AdminJS Evaluation** (Commits: 9f1a04b, ae4f8bf)
+   - Evaluated AdminJS as potential dashboard solution
+   - Created integration guide with 6-8 week phased implementation plan
+   - Produced production-ready POC code with full TypeScript support
+   - Recommendation: Partial Adoption (phased approach)
+
+3. **NPM Publish Failure Investigation** (In progress)
+   - Identified workspace package structure with file: protocol references
+   - Documented 35+ UNMET DEPENDENCY warnings from eslint/Next.js peer dependencies
+   - Created comprehensive troubleshooting guide: `docs/NPM_PUBLISH_TROUBLESHOOTING.md`
+   - Root cause: Normal monorepo state (file: references show as unmet but don't block publish)
+
+### Current Status
+- **Branch**: `claude/keen-wright-1pNGa` (1 commit ahead of remote)
+- **Tests**: No critical blocking issues identified
+- **CI/CD Ready**: Workflow configurations are correct
+- **Next Action**: Create PR #229 to merge authentication protection + documentation
+
+### Known Constraints
+1. Workspace UNMET DEPENDENCY warnings are expected with npm file: protocol
+2. ESLint configuration dependencies are optional peer deps (non-blocking)
+3. Publish workflow may require specific npm auth token configuration
+
+### Recommended Next Steps
+1. Create PR #229 with current branch
+2. Monitor CI checks for any regressions
+3. After merge, validate publish workflow with next tag push
+4. If publish still fails, check npm registry auth and package version conflicts
+
+---
+
 ## Agent Notes (2026-04-21, README roadmap + open PR/milestone reindex)
 
 ### What Was Updated

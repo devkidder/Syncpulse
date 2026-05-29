@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Zap } from 'lucide-react';
+import Icon from '@/components/Icon';
+import Breadcrumb from '@/components/Breadcrumb';
+import PageFooter from '@/components/PageFooter';
 import SwarmVisualizer from '@/components/SwarmVisualizer';
 import RoadmapEditor from '@/components/RoadmapEditor';
 import TaskMonitor from '@/components/TaskMonitor';
@@ -28,12 +30,12 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center justify-between"
           >
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Zap className="w-8 h-8 text-swarm-accent" />
+            <div className="flex items-center gap-3">
+              <Icon name="pulse" size={40} color="#A855F7" />
+              <div>
                 <h1 className="text-4xl font-bold glow-accent">SyncPulse</h1>
+                <p className="text-swarm-tertiary text-sm mt-1">Agent Swarm Commander</p>
               </div>
-              <p className="text-swarm-tertiary text-sm">Agent Swarm Commander</p>
             </div>
             <div className="text-right flex flex-col items-end gap-2">
               <VersionBadge variant="normal" showBuildNumber={false} />
@@ -42,6 +44,17 @@ export default function Home() {
           </motion.div>
         </div>
       </header>
+
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Dashboard', href: '/dashboard', icon: 'grid' },
+          { label: 'Overview' },
+        ]}
+        variant="default"
+        showVersion={true}
+        showStatus={true}
+      />
 
       {/* Main Grid */}
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -88,6 +101,18 @@ export default function Home() {
 
       {/* Terminal Livestream Widget */}
       <TerminalLivestream />
+
+      {/* Footer */}
+      <PageFooter
+        items={[{ label: 'Dashboard', href: '/dashboard' }]}
+        showVersion={true}
+        showStatus={true}
+        showCopyright={true}
+        links={[
+          { label: 'Privacy', href: '/privacy' },
+          { label: 'Terms', href: '/terms' },
+        ]}
+      />
     </main>
   );
 }

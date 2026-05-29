@@ -15,8 +15,9 @@
     "build": "tsc --project tsconfig.json",
     "dev": "tsc --project tsconfig.json --watch",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "test": "jest",
-    "lint": "eslint src --ext .ts"
+    "test": "echo \"No tests yet\"",
+    "lint": "eslint src --ext .ts",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.0"

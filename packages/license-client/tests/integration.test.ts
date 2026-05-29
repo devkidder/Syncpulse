@@ -5,7 +5,6 @@
 
 import fs from 'fs';
 import path from 'path';
-import os from 'os';
 import {
   validateStoredLicense,
   getStoredLicenseStatus,
@@ -17,7 +16,6 @@ import {
 } from '../src/index.js';
 import { LicenseStorage } from '../src/storage.js';
 import { LicenseGenerator } from '../src/generator.js';
-import { LicenseValidator } from '../src/validator.js';
 
 describe('License Client Integration', () => {
   let testStorageDir: string;
@@ -270,7 +268,7 @@ EwIDAQAB
   describe('Full Workflow', () => {
     it('should complete full trial to commercial workflow', () => {
       // 1. First install - trial license
-      const _trialToken = initializeLicense();
+      initializeLicense();
       expect(validateStoredLicense()).toBe(true);
 
       // 2. Check trial status
@@ -352,7 +350,7 @@ EwIDAQAB
     });
 
     it('should recover from missing machine-id file', () => {
-      const _machineId1 = getMachineId();
+      getMachineId();
 
       // Delete the machine-id file
       const storagePath = LicenseStorage.getStoragePath();
