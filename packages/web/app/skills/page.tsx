@@ -4,21 +4,7 @@ import { motion } from 'framer-motion';
 import Icon from '@/components/Icon';
 import PageFooter from '@/components/PageFooter';
 import ToolCard from '@/components/ToolCard';
-import {
-  ChevronRight,
-  Palette,
-  Hammer,
-  Zap,
-  Mail,
-  Grid3x3,
-  Lock,
-  Film,
-  Rocket,
-  Lightbulb,
-  Sparkles,
-  BarChart3,
-  Code
-} from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface ToolCategory {
   name: string;
@@ -33,21 +19,6 @@ interface ToolCategory {
     status?: 'stable' | 'beta' | 'new';
   }>;
 }
-
-const iconMap: Record<string, React.ReactNode> = {
-  palette: <Palette className="w-5 h-5" />,
-  hammer: <Hammer className="w-5 h-5" />,
-  zap: <Zap className="w-5 h-5" />,
-  mail: <Mail className="w-5 h-5" />,
-  grid: <Grid3x3 className="w-5 h-5" />,
-  lock: <Lock className="w-5 h-5" />,
-  film: <Film className="w-5 h-5" />,
-  rocket: <Rocket className="w-5 h-5" />,
-  lightbulb: <Lightbulb className="w-5 h-5" />,
-  sparkles: <Sparkles className="w-5 h-5" />,
-  chart: <BarChart3 className="w-5 h-5" />,
-  code: <Code className="w-5 h-5" />,
-};
 
 const toolCategories: ToolCategory[] = [
   {
@@ -325,7 +296,7 @@ export default function SkillsPage() {
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.05 }}
                   >
-                    <ToolCard {...tool} icon={iconMap[tool.icon as string] || tool.icon} />
+                    <ToolCard {...tool} />
                   </motion.div>
                 ))}
               </div>
