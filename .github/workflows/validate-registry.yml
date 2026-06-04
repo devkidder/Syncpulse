@@ -103,6 +103,7 @@ jobs:
               const skillDirs = [
                 path.join('packages/skills', skill.name),
                 path.join('packages/skills', 'skill-' + skill.name),
+                path.join('packages/skills', skill.name + '-skill'),
               ];
 
               let found = false;
